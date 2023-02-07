@@ -21,7 +21,7 @@ func NewExecuter(commandPrefix string, logger *log.Logger) *Executer {
 
 // Execute execute takes a string as input and slices it so the first
 // part is the command name and the 2nd part is the parameters passed.
-func (executer *Executer) Execute(msg string) string {
+func (executer *Executer) Execute(msg string, a ...any) string {
 	if !strings.HasPrefix(msg, executer.commandPrefix) {
 		return errMissingPrefix.Error()
 	}
@@ -49,7 +49,7 @@ func (executer *Executer) Execute(msg string) string {
 			return errArg.Error()
 		}
 		cmd.Log(arguments, executer.logger)
-		return cmd.Value(arguments)
+		return cmd.Value(arguments, a)
 	} else {
 		return errInvalidCommand.Error()
 	}
