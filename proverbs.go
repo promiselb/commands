@@ -4,7 +4,7 @@ import "math/rand"
 
 func RandomProverb() *Wisdom {
 	i := rand.Intn(len(Proverbs))
-	return Wisdoms[i]
+	return Proverbs[i]
 }
 
 var Proverbs = []*Wisdom{
