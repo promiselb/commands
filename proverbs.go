@@ -3,11 +3,11 @@ package commands
 import "math/rand"
 
 func RandomProverb() *Wisdom {
-	i := rand.Intn(len(Wisdoms))
+	i := rand.Intn(len(Proverbs))
 	return Wisdoms[i]
 }
 
-var proverbs = []*Wisdom{
+var Proverbs = []*Wisdom{
 	{"Don't communicate by sharing memory, share memory by communicating.", "Rob Pike"},
 	{"Concurrency is not parallelism.", "Rob Pike"},
 	{"Channels orchestrate; mutexes serialize.", "Rob Pike"},

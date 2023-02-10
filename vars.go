@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	// a command that must not give parameters when to execute it.
+	// a command that doesn't need parameters when to execute it.
 	NoParams commandsParametersType = iota
 
 	// a command that parameters are optional
@@ -18,14 +18,6 @@ const (
 
 	// a command that parameters are necessary.
 	MustParams
-)
-
-const (
-	// a command that the Executer will return only the value and is not complicated.
-	NonFunctional commandType = iota
-
-	// a command that the Executer will let it do the compilation required.
-	Functional
 )
 
 type commandsParametersType int
@@ -249,7 +241,15 @@ var (
 		},
 		Description: "To play tic-tac-toe",
 		ParamsType:  MustParams,
-		CommandType: Functional,
+	}
+
+	Proverbcmd = &Command{
+		Name: "proverb",
+		Value: func(arg ...any) string {
+			return RandomProverb().Print()
+		},
+		Description: "Says a golang proverb.",
+		ParamsType:  NoParams,
 	}
 )
 
