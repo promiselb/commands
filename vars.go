@@ -284,4 +284,6 @@ var Commands = map[string]*Command{
 	Wisdomcmd.Name: Wisdomcmd,
 
 	PlayTicTacToe.Name: PlayTicTacToe,
+
+	Proverbcmd.Name: Proverbcmd,
 }
