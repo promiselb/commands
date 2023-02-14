@@ -1,8 +1,11 @@
 package commands
 
 import (
+	"encoding/json"
 	"fmt"
 	"math/rand"
+	"os"
+	"strings"
 )
 
 // Generates a random bool.
@@ -35,4 +38,23 @@ func SplitArgs(arg string) []string {
 		}
 	}
 	return slice
+}
+
+// I use it on my personal machine.
+func getJsonObjects[t interface{}](fileName string) ([]t, error) {
+	if !strings.HasSuffix(fileName, ".json") {
+		fileName = fileName + ".json"
+	}
+	objs := []t{}
+	file, err := os.Open(`C:\Go\src\golang-book\1.20\commands\json\` + fileName)
+	if err != nil {
+		return nil, err
+	}
+	err = json.NewDecoder(file).Decode(&objs)
+	return objs, err
+}
+
+// Returns a random value from a slice.
+func RandomValue[t interface{}](a ...t) t {
+	return a[rand.Intn(len(a))]
 }

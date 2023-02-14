@@ -21,7 +21,7 @@ func NewExecuter(commandPrefix string, logger *log.Logger) *Executer {
 
 // Execute execute takes a string as input and slices it so the first
 // part is the command name and the 2nd part is the parameters passed.
-func (executer *Executer) Execute(msg string, anyThing ...any) string {
+func (executer *Executer) Execute(msg string, a ...any) string {
 	if !strings.HasPrefix(msg, executer.commandPrefix) {
 		return errMissingPrefix.Error()
 	}
@@ -41,16 +41,21 @@ func (executer *Executer) Execute(msg string, anyThing ...any) string {
 				return errNoSuchCommand.Error()
 			}
 		}
-		return Helpcmd.Value()
+		return Helpcmd.Handler("")
 	}
 
 	if cmd, ok := Commands[commandName]; ok {
 		if cmd.ParamsType == MustParams && arguments == "" {
 			return errArg.Error()
 		}
-		cmd.Log(arguments, executer.logger)
-		return cmd.Value(arguments, anyThing)
+		executer.Log(cmd, arguments)
+		return cmd.Handler(arguments, a)
 	} else {
 		return errInvalidCommand.Error()
 	}
+}
+
+// Log logs the command with the given message to indicate when its executed. This is used with error tracking.
+func (executer *Executer) Log(cmd *Command, msg string) {
+	executer.logger.Printf("%s Executed. %s\n", cmd.Name, msg)
 }
